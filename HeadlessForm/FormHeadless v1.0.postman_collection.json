@@ -39756,42 +39756,6 @@
 													"type": "text"
 												},
 												{
-													"key": "__field_{{numberElement_Key}}",
-													"value": "1.000.000",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{rangeElement_Key}}",
-													"value": "10",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{urlElement_Key}}",
-													"value": "https://www.google.com/maps",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{selectionElement_Key}}",
-													"value": "Ha Noi",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{choiceElement_Key}}",
-													"value": "1",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{imageChoiceElement_Key}}",
-													"value": "/globalassets/alloy-meet/alloymeet.png",
-													"type": "text",
-													"disabled": true
-												},
-												{
 													"key": "CurrentStep",
 													"value": "0",
 													"type": "text"
@@ -39962,18 +39926,6 @@
 													"type": "text"
 												},
 												{
-													"key": "__field_{{textboxElement_Key}}",
-													"value": "test@gmail.com",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{textareaElement_Key}}",
-													"value": "test_123",
-													"type": "text",
-													"disabled": true
-												},
-												{
 													"key": "__field_{{numberElement_Key}}",
 													"value": "1000000",
 													"type": "text"
@@ -39992,18 +39944,6 @@
 													"key": "__field_{{selectionElement_Key}}",
 													"value": "Ha Noi",
 													"type": "text"
-												},
-												{
-													"key": "__field_{{choiceElement_Key}}",
-													"value": "1",
-													"type": "text",
-													"disabled": true
-												},
-												{
-													"key": "__field_{{imageChoiceElement_Key}}",
-													"value": "/globalassets/alloy-meet/alloymeet.png",
-													"type": "text",
-													"disabled": true
 												},
 												{
 													"key": "CurrentStep",
@@ -52112,7 +52052,755 @@
 			]
 		},
 		{
-			"name": "Get Form Infor",
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Get GUI form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"formGuid\", pm.response.text());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cms/GetContentGuid?id=80186",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cms",
+								"GetContentGuid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "80186"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a form which allow anonymous submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody =pm.response.json();\r",
+									"var formElements = responseBody.formElements;\r",
+									"var textboxElementList = formElements.filter(x => x.contentType == 'TextboxElementBlock');\r",
+									"\r",
+									"pm.collectionVariables.set(\"formKey\", responseBody.key);\r",
+									"pm.collectionVariables.set(\"textboxElement_Key1\", textboxElementList[0].key);\r",
+									"pm.collectionVariables.set(\"textboxElement_Key2\", textboxElementList[1].key);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}/{{formGuid}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"path": [
+								"{{formGuid}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anonymos submit form",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"submissionKey\", pm.response.json().submissionKey);\r",
+									"\r",
+									"let textboxElement_Key1 = pm.collectionVariables.get(\"textboxElement_Key1\");\r",
+									"let element_Value1 = requestData.getElementValue(textboxElement_Key1);\r",
+									"pm.collectionVariables.set(\"element_Value1\", element_Value1);\r",
+									"\r",
+									"let textboxElement_Key2 = pm.collectionVariables.get(\"textboxElement_Key2\");\r",
+									"let element_Value2 = requestData.getElementValue(textboxElement_Key2);\r",
+									"pm.collectionVariables.set(\"element_Value2\", element_Value2);\r",
+									"\r",
+									"verifyResponseCode(200);\r",
+									"verifySuccessSubmitMessage();\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=<calculated when request is sent>",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formKey",
+									"value": "{{formKey}}",
+									"type": "text"
+								},
+								{
+									"key": "locale",
+									"value": "en",
+									"type": "text"
+								},
+								{
+									"key": "__field_{{textboxElement_Key1}}",
+									"value": "Thy",
+									"type": "text"
+								},
+								{
+									"key": "__field_{{textboxElement_Key2}}",
+									"value": "Ha Noi",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get form submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let textboxElement_Key1 = pm.collectionVariables.get(\"textboxElement_Key1\");\r",
+									"let element_Value1 = pm.collectionVariables.get(\"element_Value1\");\r",
+									"\r",
+									"let textboxElement_Key2 = pm.collectionVariables.get(\"textboxElement_Key2\");\r",
+									"let element_Value2 = pm.collectionVariables.get(\"element_Value2\");\r",
+									"\r",
+									"verifyResponseCode(200);\r",
+									"verifyFieldValueEqual(textboxElement_Key1, element_Value1);\r",
+									"verifyFieldValueEqual(textboxElement_Key2, element_Value2);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}/{{formKey}}/submissions/{{submissionKey}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"path": [
+								"{{formKey}}",
+								"submissions",
+								"{{submissionKey}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get GUI form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"formGuid\", pm.response.text());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cms/GetContentGuid?id=81189",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cms",
+								"GetContentGuid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "81189"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a form which change from alloy anonymous to not allow anonymous",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody =pm.response.json();\r",
+									"var formElements = responseBody.formElements;\r",
+									"\r",
+									"pm.collectionVariables.set(\"formKey\", responseBody.key);\r",
+									"pm.collectionVariables.set(\"textboxElement_Key\", formElements.find(x => x.contentType == 'TextboxElementBlock').key);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}/{{formGuid}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"path": [
+								"{{formGuid}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anonymous submit form",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"submissionKey\", pm.response.json().submissionKey);\r",
+									"verifyResponseCode(401);\r",
+									"verifyFormMessageContains(\"You must be logged in to submit this form. If you are logged in and still cannot post, make sure \\\"Do not track\\\" in your browser settings is disabled.\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=<calculated when request is sent>",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formKey",
+									"value": "{{formKey}}",
+									"type": "text"
+								},
+								{
+									"key": "locale",
+									"value": "en",
+									"type": "text"
+								},
+								{
+									"key": "__field_{{textboxElement_Key}}",
+									"value": "Thy",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get GUI form",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"formGuid\", pm.response.text());\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/cms/GetContentGuid?id=81185",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"cms",
+								"GetContentGuid"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "81185"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a form which not allow anonymous submission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody =pm.response.json();\r",
+									"var formElements = responseBody.formElements;\r",
+									"\r",
+									"pm.collectionVariables.set(\"formKey\", responseBody.key);\r",
+									"pm.collectionVariables.set(\"textboxElement_Key\", formElements.find(x => x.contentType == 'TextboxElementBlock').key);\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}/{{formGuid}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"path": [
+								"{{formGuid}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Anonymos submit form",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"submissionKey\", pm.response.json().submissionKey);\r",
+									"verifyResponseCode(401);\r",
+									"verifyFormMessageContains(\"You must be logged in to submit this form. If you are logged in and still cannot post, make sure \\\"Do not track\\\" in your browser settings is disabled.\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=<calculated when request is sent>",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formKey",
+									"value": "{{formKey}}",
+									"type": "text"
+								},
+								{
+									"key": "locale",
+									"value": "en",
+									"type": "text"
+								},
+								{
+									"key": "__field_{{textboxElement_Key}}",
+									"value": "Thy",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetJwtToken",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"auToken\", pm.response.json().access_token);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "client_id",
+									"value": "TestClient",
+									"type": "text"
+								},
+								{
+									"key": "grant_type",
+									"value": "password",
+									"type": "text"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "devLab08@",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/episerver/connect/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"episerver",
+								"connect",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Admin submit form",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"verifyResponseCode(200);\r",
+									"verifySuccessSubmitMessage();"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data; boundary=<calculated when request is sent>",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "formKey",
+									"value": "{{formKey}}",
+									"type": "text"
+								},
+								{
+									"key": "locale",
+									"value": "en",
+									"type": "text"
+								},
+								{
+									"key": "__field_{{textboxElement_Key}}",
+									"value": "Thy",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}{{formEndpoint}}",
+							"host": [
+								"{{url}}{{formEndpoint}}"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{auToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Get Forms",
 			"item": [
 				{
 					"name": "Common",
@@ -55883,7 +56571,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{url}}{{formEndpoint}}/{{formGuid}}?locale=sv",
+									"raw": "{{url}}{{formEndpoint}}/{{formGuid}}?locale=en",
 									"host": [
 										"{{url}}{{formEndpoint}}"
 									],
@@ -55893,7 +56581,7 @@
 									"query": [
 										{
 											"key": "locale",
-											"value": "sv"
+											"value": "en"
 										}
 									]
 								}
@@ -57765,23 +58453,23 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"pm.sendRequest({",
-					"    url: 'http://localhost:8000/api/episerver/connect/token',",
-					"    method: 'POST',",
-					"    body: {",
-					"        mode: 'urlencoded',",
-					"        urlencoded: [",
-					"            { key: \"client_id\", value: \"TestClient\" },",
-					"            { key: \"grant_type\", value: \"password\" },",
-					"            { key: \"username\", value: \"{{userName}}\" },",
-					"            { key: \"password\", value: \"{{password}}\" }",
-					"        ]",
-					"    }",
-					"}, function (err, res) {",
-					"    if (err === null) {",
-					"        pm.collectionVariables.set(\"JwtToken\", res.json().access_token);",
-					"    }",
-					"});"
+					"// pm.sendRequest({",
+					"//     url: 'http://localhost:8000/api/episerver/connect/token',",
+					"//     method: 'POST',",
+					"//     body: {",
+					"//         mode: 'urlencoded',",
+					"//         urlencoded: [",
+					"//             { key: \"client_id\", value: \"TestClient\" },",
+					"//             { key: \"grant_type\", value: \"password\" },",
+					"//             { key: \"username\", value: \"{{userName}}\" },",
+					"//             { key: \"password\", value: \"{{password}}\" }",
+					"//         ]",
+					"//     }",
+					"// }, function (err, res) {",
+					"//     if (err === null) {",
+					"//         pm.collectionVariables.set(\"JwtToken\", res.json().access_token);",
+					"//     }",
+					"// });"
 				]
 			}
 		},
