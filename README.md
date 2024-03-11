@@ -57,6 +57,7 @@ You can run specific script from command line. Following are sample commands.
 Postman script is stored in folder automation-content-headless-forms-api/FormHeadless/
 
 - Import script to Postman
+- Copy Data\files to your Working directory which is defined on Postman. These folder contains upload files that some scripts used.
 - From Collection variables, update these varriables corresponding to the site: url, username, password.
 - Run script with Newman.
 
