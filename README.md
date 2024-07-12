@@ -19,17 +19,17 @@ Newman is a command-line collection runner for Postman. It allows you to effortl
 
 ### Sample commands to run script for Headless Forms
 You can run specific script from command line. Following are sample commands.
-#### Run all test of Headless Forms collection, including Get Forms, Submit Form and Get Forms Submission
+#### Run test for Regression testing
 ###### Definition:
-    newman run “FormHeadless v1.0.postman_collection.json” -r htmlextra
+    newman run “FormHeadless 1.0.0.postman_collection.json” --folder "Regression" -r htmlextra
 
 #### Run test for GET forms API
 ###### Code:
-    newman run “FormHeadless v1.0.postman_collection.json” --folder "Get Forms" -r htmlextra
+    newman run “FormHeadless 1.0.0.postman_collection.json” --folder "GetForms" -r htmlextra
     
 #### Run test for Submit forms and Get forms submission
 ###### Code:
-    newman run “FormHeadless v1.0.postman_collection.json” --folder "Form submission" -r htmlextra
+    newman run “FormHeadless 1.0.0.postman_collection.json” --folder "FormSubmission" -r htmlextra
 
 * Note: You can specify the test folder to save time with option --folder "folderName"
 
