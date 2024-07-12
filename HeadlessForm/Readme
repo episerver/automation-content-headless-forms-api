@@ -1,0 +1,14 @@
+----DIRECTORY STRUCTURE IN POSTMAN SCRIPT----
+
+1. Regression : Use for running regression testing
+Including: 
+- FormSubmission: For endpoint submit form
+- GetForms: For endpoint Get forms 
+
+2. Others: Use for testing some specific features, testing for User story, testing for bugs...
+  Note: Don't need run this folder for regression testing.
+Including:
+- appsettings: Combine manual + automation to run this folder. Automation configures only support for local site.
+- Authentication/Authorization: Test for Authentication/Authorization.
+- SupportingJson: Test for US AFORM-4147.
+- Bugs: Updated bugs.
